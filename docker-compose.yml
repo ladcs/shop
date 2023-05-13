@@ -1,0 +1,16 @@
+version: 3
+services:
+  db:
+    image: mysql:8.0.21
+    container_name: db
+    restart: always
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
