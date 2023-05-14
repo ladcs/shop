@@ -23,7 +23,7 @@ export default class ProductsModel implements IModelProduct<IProduct>{
     const query = 'SELECT * FROM market.products WHERE code=?';
     const [row] = await connection.execute(query, [id]);
 
-    if (!row) return null;
+    if (!(row as RowDataPacket[])[0]) return null;
     const product = {
       code: id,
       name: (row as RowDataPacket[])[0].name,
