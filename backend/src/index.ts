@@ -1,3 +1,6 @@
-import seeders from './db/seeders';
+import { App } from './app';
+import 'dotenv/config';
 
-seeders();
+const PORT = process.env.PORTAPI || 3001;
+
+new App().start(PORT);

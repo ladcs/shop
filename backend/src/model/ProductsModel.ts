@@ -40,7 +40,7 @@ export default class ProductsModel implements IModelProduct<IProduct>{
     const query = (`UPDATE market.products SET name=?, cost_price=?, sales_price=?
       WHERE code=?`);
     await connection.execute(query, [name, cost_price, sales_price, code]);
-
+    
     return {...obj}
   }
 }

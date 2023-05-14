@@ -26,17 +26,18 @@ export default class ProductsServices implements IServicesProducts<IProduct> {
   update = async({ code, newPrice }: codeAndNewPrice): Promise<IProductNewPrice> => {
     const rulesToUpdate = new RulesToUpdate();
     rulesToUpdate.fieldRules(code, newPrice * 100);
-
+    
     const product = await this.getOne(code);
-
+    
     
     rulesToUpdate.financialTeamRule(product.cost_price, newPrice);
     rulesToUpdate.marketingTeamRule(product.sales_price, newPrice);
-
+    
     const current_price = product.sales_price;
     const new_price = newPrice.toFixed(2);
-    const updatedProduct = { sales_product: newPrice, ...product };
+    const updatedProduct = { ...product, sales_price: newPrice };
     this.model.update(updatedProduct);
+
     return {code, name: product.name, current_price, new_price};
   }
 }
