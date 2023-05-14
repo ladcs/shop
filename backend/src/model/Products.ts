@@ -1,6 +1,6 @@
 import { RowDataPacket } from 'mysql2'
 import { IProduct } from "../interface/IProduct";
-import { IModelProduct } from "../interface/IModel";
+import { IModelProduct } from "../interface/IModelProduct";
 import connection from "./connection";
 
 export default class ProductsModel implements IModelProduct<IProduct>{
