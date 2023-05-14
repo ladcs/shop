@@ -1,3 +1,3 @@
-import getQueries from './db/seeders';
+import seeders from './db/seeders';
 
-getQueries();
+seeders();
