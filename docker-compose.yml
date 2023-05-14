@@ -5,11 +5,10 @@ services:
     container_name: db
     platform: linux/x86_64
     ports:
-      - ${PORT}:3306
-    env_file:
-      - .env
+      - 3002:3306
     environment:
-      - PORT=${PORT}
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=market
     restart: 'always'
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
