@@ -18,17 +18,17 @@ export default class Packs implements IModelPacks<IPacks>{
 
     return packs;
   }
-  readOne = async (id: number): Promise<IPacks | null> => {
-    const query = "SELECT * FROM market.packs WHERE id=?;";
-    const [row] = await connection.execute(query, [id]);
+  readOne = async (id: number): Promise<IPacks[] | null> => {
+    const query = "SELECT * FROM market.packs WHERE pack_id=?;";
+    const [rows] = await connection.execute(query, [id]);
 
-    if (!row) return null;
-    const pack = {
-      id,
-      pack_id: (row as RowDataPacket[])[0].pack_id,
-      product_id: (row as RowDataPacket[])[0].product_id,
-      qty: (row as RowDataPacket[])[0].qty,
-    }
+    if (!(rows as RowDataPacket[])[0]) return null;
+    const pack = (rows as RowDataPacket[]).map((row) => ({
+      id: row.id,
+      pack_id: row.pack_id,
+      product_id: row.product_id,
+      qty: row.qty,
+    }));
 
     return pack;
   }

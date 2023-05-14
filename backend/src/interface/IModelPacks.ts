@@ -1,4 +1,4 @@
 export interface IModelPacks<T> {
   read(): Promise<T[]>,
-  readOne(id: number): Promise<T | null>,
+  readOne(id: number): Promise<T[] | T | null>,
 }

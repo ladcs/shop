@@ -29,10 +29,11 @@ export default class PacksPrice implements IModelPacks<IPackInfo> {
     FROM market.packs AS packs
     INNER JOIN market.products AS products
     ON packs.product_id = products.code
+    WHERE pack_id = ?
     GROUP BY pack_id;`);
     const [row] = await connection.execute(query, [pack_id]);
 
-    if (!row) return null;
+    if (!(row as RowDataPacket[])[0]) return null;
     const pack = {
       pack_id: (row as RowDataPacket[])[0].pack_id,
       price: (row as RowDataPacket[])[0].price,
