@@ -109,7 +109,7 @@ const File = () => {
           e.preventDefault();
           setIsValid(true)
         }}>Validar</button>
-        <button disabled={isValidToChange && !isValid} onClick={handleClickTonewPricesButton}>Atualizar</button>
+        <button disabled={isValidToChange || !isValid } onClick={handleClickTonewPricesButton}>Atualizar</button>
       </form>
       { isUpdated ? <UpdateTable /> : <CsvTable /> }
     </div>
