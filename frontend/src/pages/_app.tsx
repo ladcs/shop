@@ -30,6 +30,8 @@ type marketContext = {
   setToNewPrices: Dispatch<SetStateAction<NewPrices[] | []>>;
   changes: Changes[] | [];
   setChanges: (e: Changes[] | []) => void;
+  isValid: boolean;
+  setIsValid: (e: boolean) => void;
 };
 
 const contextDefault: marketContext = {
@@ -45,6 +47,8 @@ const contextDefault: marketContext = {
   setToNewPrices: (e) => {},
   changes: [],
   setChanges: (e) => {},
+  isValid: false,
+  setIsValid: (e) => {},
 };
 
 export const MarketContext = createContext<marketContext>(contextDefault);
@@ -60,6 +64,7 @@ function MarketProvider({ children }: Props) {
   const [validate, setValidate] = useState<string[]>([]);
   const [toNewPrices, setToNewPrices] = useState<NewPrices[] |[]>([]);
   const [changes, setChanges] = useState<Changes[] | []>([]);
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const value = {
     toNewPrices,
@@ -74,6 +79,8 @@ function MarketProvider({ children }: Props) {
     setValidate,
     changes,
     setChanges,
+    isValid,
+    setIsValid,
   };
 
   return (

@@ -34,7 +34,7 @@ export default class ProductsServices implements IServicesProducts<IProduct> {
     rulesToUpdate.marketingTeamRule(product.sales_price, newPrice);
     
     const current_price = product.sales_price;
-    const new_price = newPrice.toFixed(2);
+    const new_price = newPrice;
     const updatedProduct = { ...product, sales_price: newPrice };
     this.model.update(updatedProduct);
 

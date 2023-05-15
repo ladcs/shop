@@ -3,15 +3,16 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useContext } from "react";
 
 const CsvTable = () => {
-  const { validate, toNewPrices } = useContext(MarketContext);
-  const tableTitle = ["código", "valor para reajuste", "status"];
+  const { toNewPrices, isValid } = useContext(MarketContext);
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            { tableTitle.map((cell, i)=> <TableCell key={i}>{cell}</TableCell>) }
+            <TableCell>Codigo</TableCell>
+            <TableCell>Valor Para Reajuste</TableCell>
+            {isValid ? <TableCell>Status</TableCell> : <></>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -20,7 +21,7 @@ const CsvTable = () => {
               <TableRow key={i}>
                 <TableCell>{item.code}</TableCell>
                 <TableCell>{item.newPrice}</TableCell>
-                <TableCell>{validate[i]}</TableCell>
+                {isValid ? <TableCell>{item.status}</TableCell> : <></>}
               </TableRow>
             ))
           }

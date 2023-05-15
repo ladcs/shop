@@ -7,6 +7,7 @@ import React, { FormEvent, useContext, useEffect, useState } from "react"
 
 const File = () => {
   const {
+    setIsValid,
     csvFile,
     setProductList,
     setCsvFile,
@@ -22,6 +23,7 @@ const File = () => {
       setCsvFile(e.target.files[0]);
       setChanges([]);
       setIsUpdated(false);
+      setIsValid(false);
     } else {
       setCsvFile(null);
     }
@@ -82,7 +84,10 @@ const File = () => {
       <h1>Upload do arquivo com os códigos e novos preços!</h1>
       <form>
         <input type="file" accept=".csv" onChange={handleFileChange} />
-        <button>Validar</button>
+        <button onClick={(e: FormEvent) => {
+          e.preventDefault();
+          setIsValid(true)
+        }}>Validar</button>
         <button disabled={isValidToChange} onClick={handleClickTonewPricesButton}>Atualizar</button>
       </form>
       { isUpdated ? <UpdateTable /> : <CsvTable /> }
