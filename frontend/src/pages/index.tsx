@@ -1,56 +1,41 @@
-import { useState } from 'react';
-import axios from 'axios';
-import IUploadResponse from '@/interface/IUploadResponse';
+import { useContext, useEffect } from 'react';
 import { api } from '@/lib/axios';
+import { IProduct } from '@/interface/IProduct';
+import { IPacks } from '@/interface/IPacks';
+import { IPackInfo } from '@/interface/IPacksInfo';
+import File from '@/components/File';
+import { MarketContext } from './_app';
 
-const Upload: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+interface props {
+  products: IProduct[],
+  packs: IPacks[],
+  packsPrices: IPackInfo[],
+}
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0]);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (selectedFile) {
-      const fileData = new FormData();
-      fileData.append('file', selectedFile);
-
-      try {
-        const response = await axios.post<IUploadResponse>('/api/upload', fileData);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+const Upload= ({ products, packs }: props) => {
+  const { setProductList, setPacksList } = useContext(MarketContext);
+  useEffect(()=> {
+    setProductList(products);
+    setPacksList(packs);
+  }, [products, packs, setProductList, setPacksList]);
 
   return (
     <div>
-      <h1>Upload do Arquivo CSV</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept=".csv" onChange={handleFileChange} />
-        <button type="submit">Enviar</button>
-      </form>
+      <File />
     </div>
   );
 };
 
 export const getServerSideProps = async () => {
-  const [productsResponse, packsResponse, packsPricesResponse] = await Promise.all([
-    api.get('products'),
-    api.get('packs'),
-    api.get('packs_prices')
+  const [productsResponse, packsResponse] = await Promise.all([
+    api.get('/products'),
+    api.get('/pack')
   ]);
 
   return {
     props: {
       products: productsResponse.data,
       packs: packsResponse.data,
-      packsPrices: packsPricesResponse,
     }
   }
 }
