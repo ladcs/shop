@@ -6,6 +6,7 @@ import { IPackInfo } from '@/interface/IPacksInfo';
 import File from '@/components/File';
 import { MarketContext } from './_app';
 import ProductTable from '@/components/ProductTabel';
+import PackTable from '@/components/PackTable';
 
 interface props {
   products: IProduct[],
@@ -24,6 +25,7 @@ const Upload= ({ products, packs }: props) => {
     <div>
       <File />
       <ProductTable />
+      <PackTable />
     </div>
   );
 };

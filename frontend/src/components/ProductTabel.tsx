@@ -5,7 +5,6 @@ import { useContext } from 'react';
 const ProductTable = () => {
   const { productList } = useContext(MarketContext);
   const productTableTitle = ["código", "nome", "preço de custo", "preço de venda"];
-  const keysProductsList = Object.keys(productList[0]);
 
   return (
     <TableContainer component={Paper}>
