@@ -4,6 +4,19 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
+type NewPrices = {
+  code: string;
+  newPrice: string;
+  status: string;
+}
+
+type Changes = {
+  code: number;
+  newPrice: number;
+  currentPrice: number;
+  name: string;
+}
+
 type marketContext = {
   csvFile: File | null;
   setCsvFile: (e: File | null) => void;
@@ -13,6 +26,10 @@ type marketContext = {
   setPacksList: (e: IPacks[] | []) => void;
   validate: string[] | [];
   setValidate: Dispatch<SetStateAction<string[]>>;
+  toNewPrices: NewPrices[] | [],
+  setToNewPrices: Dispatch<SetStateAction<NewPrices[] | []>>;
+  changes: Changes[] | [];
+  setChanges: (e: Changes[] | []) => void;
 };
 
 const contextDefault: marketContext = {
@@ -24,6 +41,10 @@ const contextDefault: marketContext = {
   setPacksList: (e) => {},
   validate: [],
   setValidate: (e) => {},
+  toNewPrices: [],
+  setToNewPrices: (e) => {},
+  changes: [],
+  setChanges: (e) => {},
 };
 
 export const MarketContext = createContext<marketContext>(contextDefault);
@@ -37,7 +58,12 @@ function MarketProvider({ children }: Props) {
   const [productList, setProductList] = useState<IProduct[] | []>([]);
   const [packsList, setPacksList] = useState<IPacks[] | []>([]);
   const [validate, setValidate] = useState<string[]>([]);
+  const [toNewPrices, setToNewPrices] = useState<NewPrices[] |[]>([]);
+  const [changes, setChanges] = useState<Changes[] | []>([]);
+
   const value = {
+    toNewPrices,
+    setToNewPrices,
     csvFile,
     setCsvFile,
     productList,
@@ -46,6 +72,8 @@ function MarketProvider({ children }: Props) {
     setPacksList,
     validate,
     setValidate,
+    changes,
+    setChanges,
   };
 
   return (
