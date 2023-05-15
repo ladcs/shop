@@ -21,7 +21,6 @@ const seeders = async (): Promise<void> => {
   try {
     const connection = await createConnection(connectionConfig);
     const importer = new Importer(connectionConfig);
-    console.log(process.env.PATHSQL);
     await importer.import("market.sql");
 
     importer.disconnect();
