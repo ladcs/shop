@@ -23,9 +23,10 @@ export default class ProductsServices implements IServicesProducts<IProduct> {
     return product;
   }
 
-  update = async({ code, newPrice }: codeAndNewPrice): Promise<IProductNewPrice> => {
+  update = async({ code, newPrice: priceHigh }: codeAndNewPrice): Promise<IProductNewPrice> => {
+    const newPrice = priceHigh / 100;
     const rulesToUpdate = new RulesToUpdate();
-    rulesToUpdate.fieldRules(code, newPrice * 100);
+    rulesToUpdate.fieldRules(code, newPrice);
     
     const product = await this.getOne(code);
     

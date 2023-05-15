@@ -5,7 +5,7 @@ import { IPacks } from '@/interface/IPacks';
 import { IPackInfo } from '@/interface/IPacksInfo';
 import { MarketContext } from './_app';
 import ProductTable from '@/components/ProductTabel';
-import File from './File';
+import Header from '@/components/header';
 
 interface props {
   products: IProduct[],
@@ -22,8 +22,8 @@ const Upload= ({ products, packs }: props) => {
 
   return (
     <div>
+      <Header />
       <ProductTable />
-      <File />
     </div>
   );
 };

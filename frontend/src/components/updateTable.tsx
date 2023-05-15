@@ -20,8 +20,8 @@ const UpdateTable = () => {
             <TableRow key={i}>
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.name}</TableCell>
-              <TableCell>{item.currentPrice}</TableCell>
-              <TableCell>{item.newPrice}</TableCell>
+              <TableCell>{item.currentPrice.toFixed(2)}</TableCell>
+              <TableCell>{item.newPrice.toFixed(2)}</TableCell>
             </TableRow>
           ))
         }

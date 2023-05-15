@@ -2,9 +2,7 @@ import { z } from 'zod';
 
 const schemaToUpdate = z.object({
   code: z.number(),
-  newPrice: z.number().refine((val) => val % 1 === 0, {
-    message: 'The price must be a decimal number with 2 decimal places.',
-  }),
+  newPrice: z.number(),
 });
 
 export default schemaToUpdate;
