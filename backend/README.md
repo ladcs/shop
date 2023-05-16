@@ -36,3 +36,5 @@ routes => configura os endpoints, products para os gets da patch tabela products
 util => possui a classe RulesToUpdate, nela tem as regras para testes se pode haver o update de sales_price, usado no service de products.
 
 app e index => configura o servidor.
+
+obs: Para teste com postman ou insomina o valor para enviar para update deve ser multiplicado por 100, assim para um valor novo de 8.90 deve ser enviado 890.
