@@ -7,8 +7,8 @@ export default class RulesToUpdate {
   }
 
   marketingTeamRule = (salesPrice: number, newPrice: number) => {
-    if(salesPrice * 1.1 <= newPrice
-      || salesPrice * 0.9 >= newPrice) throw new BadRequest("new value needs to be 10% of current value.");
+    if(salesPrice * 1.1 < newPrice
+      || salesPrice * 0.9 > newPrice) throw new BadRequest("new value needs to be 10% of current value.");
   }
 
   fieldRules = (code: number, newPrice: number) => {

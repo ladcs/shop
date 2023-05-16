@@ -36,31 +36,4 @@ export default class PackController {
       next(error);
     }
   };
-
-  getAllPackPrices = async (
-    _req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response | void> => {
-    try {
-      const packs = await this.service.getAllPackPrices();
-      return res.status(StatusCodes.OK).json(packs);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getOnePackPriceByPackId = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<Response | void> => {
-    try {
-      const { packId } = req.params;
-      const pack = await this.service.getPackPricesByPackId(parseInt(packId));
-      return res.status(StatusCodes.OK).json(pack);
-    } catch (error) {
-      next(error);
-    }
-  };
 }
