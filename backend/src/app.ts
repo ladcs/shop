@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 
 import Route from './routes';
 import ErrorMiddleware from './middleware/error';

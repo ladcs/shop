@@ -1,5 +1,27 @@
 version: "3"
 services:
+  backend:
+    build: ./backend
+    platform: linux/x86_64
+    container_name: app_backend
+    command: npm run start
+    ports:
+      - ${BACKEND_PORT}:3001
+    volumes:
+      - './backend:/app'
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=market
   db:
     image: mysql:8.0.21
     container_name: db
@@ -7,7 +29,7 @@ services:
     ports:
       - ${PORT}:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=market
     restart: 'always'
     healthcheck:
