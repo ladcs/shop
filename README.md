@@ -10,19 +10,39 @@ Usando então o comando
 
 ````cd shop````
 
-Pode levantar o banco de dados com o docker compose, comando
+A aplicação pode funcionar com o docker compose, comando
 
 ````docker-compose up -d````
 
-Para isso é necessário ter um arquivo .env com a variavel de ambiente PORT, como visto no arquivo .env.example.
+Para isso é necessário ter um arquivo .env com algumas variáveis de ambiente, vistas no arquivo .env.example. Essas variáveis são:
 
-Essa varivel de ambiente é usado para poder ter acesso ao banco pelo localhost.
+PORT -> porta do banco de dados
 
-Após a imagem do banco funcionando, deve ir para a pasta do backend
+MYSQL_PASSWORD -> senha do banco de dados
+
+FRONTEND_PORT -> porta do front-end
+
+BACKEND_PORT -> porta do back-end
+
+Essas variáveis de ambiente são usados para poder ter acesso as aplicações pelo localhost.
+
+Caso queira fazer a aplicação pelo node:
+
+Deve ir para a pasta do backend
 
 ````cd backend````
 
-Aqui tem o arquivo .env.example novamente, nele mostra-se as variaveis que deve usar caso não esteja usando docker para subir o banco. caso use o Docker a PORT aqui deve ser a mesma que do .env anterior, caso use o docker é apenas necessario atribuir esse valor.
+Aqui tem o arquivo .env.example novamente, nele mostra-se as variaveis que deve usar, caso não esteja usando docker. As variáveis são:
+
+MYSQL_USER -> usuário do MySQL;
+
+MYSQL_PASSWORD -> senha do MySQL;
+
+BACKEND_PORT -> Porta do backend;
+
+PORT -> porta do MySQL;
+
+HOST -> se for no node da propria máquina será localhost, ou o host do servido.
 
 Deve iniciar com o comando.
 
@@ -32,11 +52,17 @@ ou
 
 ````npm start````
 
-Com a API funcionando, deve ter um retorno no terminar Rodando na porta 3001 ou Rodando na porta PORTAPI.
+Com a API funcionando, deve ter um retorno no terminar Rodando na porta BACKEND_PORT.
 
 Deixando então em segundo plano, deve entrar na pasta frontend
 
 ````cd ../frontend````
+
+Aqui também tem duas variaveis de ambiente, como pode ver em .env.local.example, essas devem ficar no arquivo .env.local, essas variáveis são:
+
+NEXT_PUBLIC_BACKEND_PORT -> porta do backend, a mesma do BACKEND_PORT
+
+NEXT_PUBLIC_HOST -> se for no node da propria máquina será localhost, ou o host do servido.
 
 Então com o comando
 
