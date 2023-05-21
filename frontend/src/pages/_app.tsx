@@ -22,8 +22,8 @@ type marketContext = {
   setCsvFile: (e: File | null) => void;
   productList: IProduct[] | [];
   setProductList: (e: IProduct[] | []) => void;
-  packsList: IPacks[] | [];
-  setPacksList: (e: IPacks[] | []) => void;
+  packsList: IProduct[] | [];
+  setPacksList: (e: IProduct[] | []) => void;
   validate: string[] | [];
   setValidate: Dispatch<SetStateAction<string[]>>;
   toNewPrices: NewPrices[] | [],
@@ -60,7 +60,7 @@ type Props = {
 function MarketProvider({ children }: Props) {
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [productList, setProductList] = useState<IProduct[] | []>([]);
-  const [packsList, setPacksList] = useState<IPacks[] | []>([]);
+  const [packsList, setPacksList] = useState<IProduct[] | []>([]);
   const [validate, setValidate] = useState<string[]>([]);
   const [toNewPrices, setToNewPrices] = useState<NewPrices[] |[]>([]);
   const [changes, setChanges] = useState<Changes[] | []>([]);

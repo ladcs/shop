@@ -1,3 +1,4 @@
+import ProductTable from "@/components/ProductTabel";
 import Header from "@/components/header";
 import { IPacks } from "@/interface/IPacks";
 import { MarketContext } from "@/pages/_app";
@@ -43,41 +44,7 @@ const PackTable = () => {
   return (
     <div>
       <Header />
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {tableTitle.map((cell, i) => (
-                <TableCell key={i}>{cell}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {packs.map((p) =>
-              p.map((row, i) => (
-                <TableRow key={i}>
-                  {i === 0 ? (
-                    <TableCell>{row.pack_id}</TableCell>
-                  ) : (
-                    <TableCell></TableCell>
-                  )}
-                  <TableCell>{getProductName(row.product_id)}</TableCell>
-                  <TableCell>{row.qty}</TableCell>
-                  {i === 0 ? (
-                    <TableCell>
-                      {getPricePack(p).toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2,
-                      })}
-                    </TableCell>
-                  ) : (
-                    <TableCell></TableCell>
-                  )}
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <ProductTable tableRow={ packsList } />
     </div>
   );
 };

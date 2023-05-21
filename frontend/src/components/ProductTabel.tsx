@@ -1,21 +1,25 @@
 import { MarketContext } from '@/pages/_app';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useContext } from 'react';
+import { IProduct } from '@/interface/IProduct';
 
-const ProductTable = () => {
-  const { productList } = useContext(MarketContext);
-  const productTableTitle = ["código", "nome", "preço de custo", "preço de venda"];
+interface prop {
+  tableRow: IProduct[];
+}
+
+const ProductTable = ({ tableRow }: prop) => {
+  const tableTitle = ["código", "nome", "preço de custo", "preço de venda"];
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            { productTableTitle.map((cell, i) => <TableCell key={i}>{cell}</TableCell>) }
+            { tableTitle.map((cell, i) => <TableCell key={i}>{cell}</TableCell>) }
           </TableRow>
         </TableHead>
         <TableBody>
-          { productList.map(product => (
+          { tableRow.map(product => (
             <TableRow key={product.code}>
               <TableCell>{product.code}</TableCell>
               <TableCell>{product.name}</TableCell>

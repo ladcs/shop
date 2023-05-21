@@ -10,20 +10,22 @@ import Header from '@/components/header';
 interface props {
   products: IProduct[],
   packs: IPacks[],
-  packsPrices: IPackInfo[],
 }
 
 const Upload= ({ products, packs }: props) => {
-  const { setProductList, setPacksList } = useContext(MarketContext);
+  const { setProductList, productList, setPacksList } = useContext(MarketContext);
   useEffect(()=> {
-    setProductList(products);
-    setPacksList(packs);
-  }, [products, packs, setProductList, setPacksList]);
+    const packsCode = Array.from(new Set(packs.map(pack => pack.pack_id)));
+    const packsInProducts = products.filter(pack => packsCode.includes(pack.code));
+    const onlyProducts = products.filter(pack => !packsCode.includes(pack.code));
+    setProductList(onlyProducts);
+    setPacksList(packsInProducts);
+  }, [products, packs]);
 
   return (
     <div>
       <Header />
-      <ProductTable />
+      <ProductTable tableRow={productList} />
     </div>
   );
 };
