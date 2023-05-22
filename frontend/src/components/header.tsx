@@ -1,4 +1,3 @@
-import { MarketContext } from "@/pages/_app";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

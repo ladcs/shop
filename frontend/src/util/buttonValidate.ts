@@ -15,10 +15,9 @@ type toValidate = {
   setIsValidToChange: Dispatch<SetStateAction<boolean>>;
   setValidate: Dispatch<SetStateAction<string[]>>;
   csvFile: File | null;
-  setToNewPrices: Dispatch<SetStateAction<NewPrices[] | []>>;
 }
 
-export const validatedButton = async ({allProducts, setIsValidToChange, csvFile, setValidate, setToNewPrices}: toValidate) => {
+export const validatedButton = async ({allProducts, setIsValidToChange, csvFile, setValidate}: toValidate) => {
   if (csvFile) {
     const products = await productsInCsv(csvFile);
     const validate = products.map((product) => {
@@ -55,7 +54,6 @@ export const validatedButton = async ({allProducts, setIsValidToChange, csvFile,
           status: "okay"});
     });
     
-    setToNewPrices(validate)
     setIsValidToChange(validate.some(({ status }) => "okay" !== status));
     setValidate(validate.map(({ status }) => status));
   } else {

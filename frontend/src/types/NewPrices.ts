@@ -1,5 +1,5 @@
 type NewPrices = {
   code: number;
-  newPrice: number;
+  newPrice: string;
   status?: string;
 }

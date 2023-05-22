@@ -1,10 +1,12 @@
 import { MarketContext } from "@/pages/_app"
+import { addPackInChanges } from "@/util/addPackInChanges";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const UpdateTable = () => {
-  const { changes } = useContext(MarketContext);
-  const tableTitle = ["Codigo", "Nome", "Preço Atual", "Novo Preço"];
+  const { changes, toNewPrices } = useContext(MarketContext);
+
+  const tableTitle = ["Codigo", "Nome", "Preço Atual", "Novo Preço", "status"];
 
   return (
     <TableContainer component={Paper}>
@@ -23,6 +25,7 @@ const UpdateTable = () => {
               <TableCell>{ typeof item.currentPrice === "string" ?  parseFloat(item.currentPrice).toFixed(2): item.currentPrice.toFixed(2) }</TableCell>
               {/*@ts-ignore*/}
               <TableCell>{typeof item.newPrice === "string" ?  parseFloat(item.newPrice).toFixed(2) : item.newPrice.toFixed(2)}</TableCell>
+              <TableCell>{toNewPrices.filter(({ code }) => item.code == code)[0].status }</TableCell>
             </TableRow>
           ))
         }

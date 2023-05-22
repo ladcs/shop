@@ -25,8 +25,8 @@ export function newPricePack({ packsInfo, productCode, newPrice, allProducts }: 
     }, 0);
     return {
       code: p.pack_id,
-      newPrice: updatedPrice,
-      status: "okay",
+      newPrice: updatedPrice.toFixed(2),
+      status: " ",
     }
   });
   return codeAndPrice;

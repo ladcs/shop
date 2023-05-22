@@ -20,7 +20,6 @@ const Products = ({ products, packs }: props) => {
     const packsCode = Array.from(new Set(packs.map(pack => pack.pack_id)));
     const packsInProducts = products.filter(pack => packsCode.includes(pack.code));
     const onlyProducts = products.filter(pack => !packsCode.includes(pack.code));
-    console.log(typeof products[5].sales_price)
     setPacksCode(packsCode);
     setPacksInfo(packs);
     setAllProducts(products);

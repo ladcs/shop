@@ -3,8 +3,8 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useContext } from "react";
 
 const CsvTable = () => {
-  const { toNewPrices, isValid } = useContext(MarketContext);
-
+  const { toNewPrices } = useContext(MarketContext);
+  
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -12,7 +12,6 @@ const CsvTable = () => {
           <TableRow>
             <TableCell>Codigo</TableCell>
             <TableCell>Valor Para Reajuste</TableCell>
-            {isValid ? <TableCell>Status</TableCell> : <></>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -21,7 +20,6 @@ const CsvTable = () => {
               <TableRow key={i}>
                 <TableCell>{item.code}</TableCell>
                 <TableCell>{item.newPrice}</TableCell>
-                {isValid && item.status !== undefined ? <TableCell>{item.status}</TableCell> : <></>}
               </TableRow>
             ))
           }
