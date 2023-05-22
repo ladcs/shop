@@ -4,12 +4,6 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
-type NewPrices = {
-  code: string;
-  newPrice: string;
-  status?: string;
-}
-
 type marketContext = {
   packsCode: number[] |[];
   setPacksCode: Dispatch<SetStateAction<number[] | []>>;

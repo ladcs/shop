@@ -1,10 +1,12 @@
 import CsvTable from "@/components/csvTable";
 import Header from "@/components/header";
 import UpdateTable from "@/components/updateTable";
-import { api } from "@/lib/axios";
 import { MarketContext } from "@/pages/_app"
 import { validatedButton } from "@/util/buttonValidate";
+import { changeInCache } from "@/util/changeInCache";
 import { handleFileChange } from "@/util/handleInputFile";
+import { newPricePack } from "@/util/isProductToPack";
+import { updateDb } from "@/util/updateDb";
 import { useRouter } from "next/router";
 import { FormEvent, useContext, useEffect, useRef, useState } from "react"
 
@@ -19,6 +21,7 @@ const File = () => {
     setValidate,
     setToNewPrices,
     toNewPrices,
+    packsInfo,
     setChanges } = useContext(MarketContext);
 
   const route = useRouter();
@@ -32,7 +35,15 @@ const File = () => {
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const toHandleFileChange ={
+  const toValidate = {
+    allProducts,
+    setIsValidToChange,
+    setValidate,
+    csvFile,
+    setToNewPrices
+  }
+
+  const toHandleFileChange = {
     setCsvFile,
     setChanges,
     setIsUpdated,
@@ -40,47 +51,35 @@ const File = () => {
     fileInputRef,
   }
 
-  const handleClickTonewPricesButton = async(e: FormEvent) => {
-    e.preventDefault();
-    try {
-      await Promise.all(
-        toNewPrices.map(async ({ code, newPrice }) => {
-          api.patch(`products/${code}`, { newPrice: parseFloat(newPrice) * 100 });
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    const toChange = toNewPrices.map(({ code, newPrice }) => {
-      const product = allProducts.filter(oldProduct => oldProduct.code === parseInt(code))[0];
-      return ({
-        code: product.code,
-        newPrice: parseFloat(newPrice),
-        name: product.name,
-        currentPrice: product.sales_price,
-      });
-    });
-    const arryToProductsListCache = [...allProducts];
-    const indexToChanges = toNewPrices.map(({ code }) => allProducts
-    .findIndex(product => product.code === parseInt(code)));
-    indexToChanges.forEach((indexToChange, i) => arryToProductsListCache[indexToChange]
-      .sales_price = toNewPrices[i].newPrice);
+  const setsToChangeCache = {
+    setChanges,
+    setAllProducts,
+    setCsvFile,
+    setIsUpdated,
+  }
 
-    setChanges(toChange);
-    setAllProducts(arryToProductsListCache);
-    setCsvFile(null);
-    setIsUpdated(true);
+  const handleClickTonUpdatePricesButton = async(e: FormEvent) => {
+    e.preventDefault();
+    const checkPack = toNewPrices.map((product) => {
+      const checkPackParams = {
+        packsInfo, 
+        productCode: product.code,
+        newPrice: product.newPrice,
+        allProducts,
+      }
+      return newPricePack(checkPackParams);
+    });
+    let toNewPrice = [...toNewPrices];
+    checkPack.forEach((packs) => {
+      toNewPrice = [...toNewPrice, ...packs];
+    });
+    
+    setToNewPrices(toNewPrice);
+    updateDb(toNewPrices);
+    changeInCache(toNewPrice, allProducts, setsToChangeCache);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-  }
-
-  const toValidate = {
-    allProducts,
-    setIsValidToChange,
-    setValidate,
-    csvFile,
-    setToNewPrices
   }
 
   useEffect(() => {
@@ -105,7 +104,7 @@ const File = () => {
           e.preventDefault();
           setIsValid(true)
         }}>Validar</button>
-        <button disabled={isValidToChange || !isValid } onClick={handleClickTonewPricesButton}>Atualizar</button>
+        <button disabled={isValidToChange || !isValid } onClick={handleClickTonUpdatePricesButton}>Atualizar</button>
       </form>
       { isUpdated ? <UpdateTable /> : <CsvTable /> }
     </div>

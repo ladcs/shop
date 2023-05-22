@@ -22,7 +22,7 @@ const UpdateTable = () => {
               <TableCell>{item.name}</TableCell>
               <TableCell>{ typeof item.currentPrice === "string" ?  parseFloat(item.currentPrice).toFixed(2): item.currentPrice.toFixed(2) }</TableCell>
               {/*@ts-ignore*/}
-              <TableCell>{typeof item.currentPrice === "string" ?  parseFloat(item.newPrice).toFixed(2) : item.newPrice.toFixed(2)}</TableCell>
+              <TableCell>{typeof item.newPrice === "string" ?  parseFloat(item.newPrice).toFixed(2) : item.newPrice.toFixed(2)}</TableCell>
             </TableRow>
           ))
         }
