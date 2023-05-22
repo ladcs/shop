@@ -7,40 +7,37 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 're
 type NewPrices = {
   code: string;
   newPrice: string;
-  status: string;
-}
-
-type Changes = {
-  code: number;
-  newPrice: number | string;
-  currentPrice: number | string;
-  name: string;
+  status?: string;
 }
 
 type marketContext = {
+  packsCode: number[] |[];
+  setPacksCode: Dispatch<SetStateAction<number[] | []>>;
+  packsInfo: IPacks[] | [];
+  setPacksInfo: Dispatch<SetStateAction<IPacks[] | []>>;
   csvFile: File | null;
-  setCsvFile: (e: File | null) => void;
-  productList: IProduct[] | [];
-  setProductList: (e: IProduct[] | []) => void;
-  packsList: IProduct[] | [];
-  setPacksList: (e: IProduct[] | []) => void;
+  setCsvFile: Dispatch<SetStateAction<File | null>>;
+  allProducts: IProduct[] | [];
+  setAllProducts: Dispatch<SetStateAction<IProduct[] | []>>;
   validate: string[] | [];
   setValidate: Dispatch<SetStateAction<string[]>>;
   toNewPrices: NewPrices[] | [],
   setToNewPrices: Dispatch<SetStateAction<NewPrices[] | []>>;
   changes: Changes[] | [];
-  setChanges: (e: Changes[] | []) => void;
+  setChanges: Dispatch<SetStateAction<Changes[] | []>>;
   isValid: boolean;
-  setIsValid: (e: boolean) => void;
+  setIsValid: Dispatch<SetStateAction<boolean>>;
 };
 
 const contextDefault: marketContext = {
+  packsCode: [],
+  setPacksCode: (e) => {},
+  packsInfo: [],
+  setPacksInfo: (e) => {},
   csvFile: null,
   setCsvFile: (e) => {},
-  productList: [],
-  setProductList: (e) => {},
-  packsList: [],
-  setPacksList: (e) => {},
+  allProducts: [],
+  setAllProducts: (e) => {},
   validate: [],
   setValidate: (e) => {},
   toNewPrices: [],
@@ -58,21 +55,27 @@ type Props = {
 };
 
 function MarketProvider({ children }: Props) {
+  const [packsCode, setPacksCode] = useState<number[] | []>([]);
   const [csvFile, setCsvFile] = useState<File | null>(null);
-  const [productList, setProductList] = useState<IProduct[] | []>([]);
+  const [allProducts, setAllProducts] = useState<IProduct[] | []>([]);
   const [packsList, setPacksList] = useState<IProduct[] | []>([]);
   const [validate, setValidate] = useState<string[]>([]);
   const [toNewPrices, setToNewPrices] = useState<NewPrices[] |[]>([]);
   const [changes, setChanges] = useState<Changes[] | []>([]);
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [packsInfo, setPacksInfo] = useState<IPacks[] | []>([]);
 
   const value = {
+    packsCode,
+    setPacksCode,
+    packsInfo,
+    setPacksInfo,
     toNewPrices,
     setToNewPrices,
     csvFile,
     setCsvFile,
-    productList,
-    setProductList,
+    allProducts,
+    setAllProducts,
     packsList,
     setPacksList,
     validate,

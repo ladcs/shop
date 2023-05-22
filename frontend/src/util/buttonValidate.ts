@@ -1,13 +1,7 @@
 import { IProduct } from "@/interface/IProduct";
-import { readCsv } from "@/lib/readCsv";
 import { Dispatch, SetStateAction } from "react";
 import { lowerPrice, porcentPrice } from "./testPrice";
-
-type csvType = {
-  data: number[][];
-  errors: [];
-  meta: any;
-}
+import { productsInCsv } from "./productsInCsv";
 
 type NewPrices = {
   code: number;
@@ -17,17 +11,16 @@ type NewPrices = {
 
 
 type toValidate = {
-  productList: IProduct[];
+  allProducts: IProduct[] | [];
   setIsValidToChange: Dispatch<SetStateAction<boolean>>;
   setValidate: Dispatch<SetStateAction<string[]>>;
   csvFile: File | null;
   setToNewPrices: Dispatch<SetStateAction<NewPrices[] | []>>;
 }
 
-export const validatedButton = async ({productList, setIsValidToChange, csvFile, setValidate, setToNewPrices}: toValidate) => {
+export const validatedButton = async ({allProducts, setIsValidToChange, csvFile, setValidate, setToNewPrices}: toValidate) => {
   if (csvFile) {
-    const csv = await readCsv(csvFile) as csvType;
-    const [_titles, ...products] = csv.data;
+    const products = await productsInCsv(csvFile);
     const validate = products.map((product) => {
       if(!product[0] || !product[1]) return ({
         code: product[0],
@@ -41,18 +34,18 @@ export const validatedButton = async ({productList, setIsValidToChange, csvFile,
           status: "preço inválido, tem que ter o formato R.CC",
         });
       }
-      const productInList = productList.filter((p) => p.code == product[0]);
+      const productInList = allProducts.filter((p) => p.code == product[0]);
       if(productInList.length === 0) return ({
         code: product[0],
         newPrice: product[1],
         status:"Código do produto inexistente",
       });
-      if(porcentPrice(productInList[0].sales_price, product[1])) return ({
+      if(porcentPrice(parseFloat(productInList[0].sales_price), product[1])) return ({
         code: product[0],
         newPrice: product[1],
         status:"reajuste maior que 10%"
       });
-      if(lowerPrice(productInList[0].cost_price, product[1])) return ({
+      if(lowerPrice(parseFloat(productInList[0].cost_price), product[1])) return ({
         code: product[0],
         newPrice: product[1],
         status:"Preço do custo maior que o enviado"

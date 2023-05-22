@@ -1,8 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { api } from '@/lib/axios';
 import { IProduct } from '@/interface/IProduct';
 import { IPacks } from '@/interface/IPacks';
-import { IPackInfo } from '@/interface/IPacksInfo';
 import { MarketContext } from './_app';
 import ProductTable from '@/components/ProductTabel';
 import Header from '@/components/header';
@@ -12,12 +11,19 @@ interface props {
   packs: IPacks[],
 }
 
-const Upload= ({ products, packs }: props) => {
-  const { setProductList, productList, setPacksList } = useContext(MarketContext);
+const Products = ({ products, packs }: props) => {
+  const { setPacksInfo, setAllProducts, setPacksCode } = useContext(MarketContext);
+  const [productList, setProductList] = useState<IProduct[] | []>([]);
+  const [packsList, setPacksList] = useState<IProduct[] | []>([]);
+  const [isProduct, setIsProduct] = useState<boolean>(true);
   useEffect(()=> {
     const packsCode = Array.from(new Set(packs.map(pack => pack.pack_id)));
     const packsInProducts = products.filter(pack => packsCode.includes(pack.code));
     const onlyProducts = products.filter(pack => !packsCode.includes(pack.code));
+    console.log(typeof products[5].sales_price)
+    setPacksCode(packsCode);
+    setPacksInfo(packs);
+    setAllProducts(products);
     setProductList(onlyProducts);
     setPacksList(packsInProducts);
   }, [products, packs]);
@@ -25,7 +31,8 @@ const Upload= ({ products, packs }: props) => {
   return (
     <div>
       <Header />
-      <ProductTable tableRow={productList} />
+      <button onClick={() => setIsProduct(!isProduct)}>{isProduct ? 'Lista de Packs': 'Lista de Produtos'}</button>
+      <ProductTable tableRow={isProduct ? productList : packsList} />
     </div>
   );
 };
@@ -44,4 +51,4 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default Upload;
+export default Products ;

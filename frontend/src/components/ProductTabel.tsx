@@ -1,6 +1,4 @@
-import { MarketContext } from '@/pages/_app';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { useContext } from 'react';
 import { IProduct } from '@/interface/IProduct';
 
 interface prop {

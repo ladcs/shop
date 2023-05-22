@@ -21,7 +21,7 @@ const CsvTable = () => {
               <TableRow key={i}>
                 <TableCell>{item.code}</TableCell>
                 <TableCell>{item.newPrice}</TableCell>
-                {isValid ? <TableCell>{item.status}</TableCell> : <></>}
+                {isValid && item.status !== undefined ? <TableCell>{item.status}</TableCell> : <></>}
               </TableRow>
             ))
           }
