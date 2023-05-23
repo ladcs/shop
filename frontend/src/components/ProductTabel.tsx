@@ -9,7 +9,7 @@ const ProductTable = ({ tableRow }: prop) => {
   const tableTitle = ["código", "nome", "preço de custo", "preço de venda"];
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className='translate-y-6'>
       <Table>
         <TableHead>
           <TableRow>

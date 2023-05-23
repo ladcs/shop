@@ -30,7 +30,11 @@ const Products = ({ products, packs }: props) => {
   return (
     <div>
       <Header />
-      <button onClick={() => setIsProduct(!isProduct)}>{isProduct ? 'Lista de Packs': 'Lista de Produtos'}</button>
+      <button
+      onClick={() => setIsProduct(!isProduct)}
+      className='mx-auto block bg-green-600 w-full hover:text-purple-200 text-purple-100 translate-y-6'
+      >{isProduct ? 'Lista de Packs': 'Lista de Produtos'}
+      </button>
       <ProductTable tableRow={isProduct ? productList : packsList} />
     </div>
   );

@@ -6,7 +6,7 @@ const CsvTable = () => {
   const { toNewPrices } = useContext(MarketContext);
   
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className="translate-y-7">
       <Table>
         <TableHead>
           <TableRow>

@@ -3,12 +3,11 @@ import Header from "@/components/header";
 import UpdateTable from "@/components/updateTable";
 import { MarketContext } from "@/pages/_app"
 import { addPackInChanges } from "@/util/addPackInChanges";
-import { validatedButton } from "@/util/buttonValidate";
 import { changeInCache } from "@/util/changeInCache";
 import { handleFileChange } from "@/util/handleInputFile";
-import { newPricePack } from "@/util/isProductToPack";
 import { toChangeTable } from "@/util/toChangeTable";
 import { updateDb } from "@/util/updateDb";
+import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { FormEvent, useContext, useEffect, useRef, useState } from "react"
 
@@ -47,13 +46,9 @@ const File = () => {
     packsInfo,
     allProducts,
     setToNewPrices,
-  }
-
-  const toValidate = {
-    allProducts,
     setIsValidToChange,
-    setValidate,
     csvFile,
+    setValidate,
   }
 
   const toHandleFileChange = {
@@ -63,6 +58,10 @@ const File = () => {
     setIsValid,
     fileInputRef,
     setToNewPrices,
+    allProducts,
+    setIsValidToChange,
+    setValidate,
+    csvFile,
   }
 
   const setsToChangeCache = {
@@ -78,6 +77,7 @@ const File = () => {
     changeInCache(toNewPrices, allProducts, setsToChangeCache);
     setIsValid(false);
     setIsUpdated(false);
+    setToNewPrices([]);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -86,25 +86,37 @@ const File = () => {
   return (
     <div>
       <Header />
-      <h1>Upload do arquivo com os códigos e novos preços!</h1>
-      <form>
+      <h1 className="flex items-center justify-center bg-green-600 text-purple-100 translate-y-6"
+      >
+        Upload do arquivo com os códigos e novos preços!
+      </h1>
+      <form className="items-center justify-center flex flex-1 translate-y-7">
         <input type="file" accept=".csv" onChange={ (e) => {
           handleFileChange(e, toHandleFileChange)
           } 
         }
-          ref={fileInputRef}/>
-        <button disabled={
+          ref={fileInputRef}
+          className="leading-relaxed pr-96"
+        />
+        <Button
+          variant="outlined"
+          disabled={
           csvFile === null || isValid
         } onClick={(e: FormEvent) => {
           e.preventDefault();
-          // @ts-ignore
-          validatedButton(toValidate);
           addPackInChanges(addPackInChangesParams);
           toChangeTable(toNewPrices, allProducts, setChanges);
           setIsValid(true);
           setIsUpdated(true);
-        }}>Validar</button>
-        <button disabled={isValidToChange || !isValid } onClick={handleClickTonUpdatePricesButton}>Atualizar</button>
+        }}
+          className="w-28 rigth-0"
+        >Validar</Button>
+        <Button
+        variant="outlined"
+        className="w-28 items-center justify-center"
+        disabled={isValidToChange || !isValid }
+        onClick={handleClickTonUpdatePricesButton}
+        >Atualizar</Button>
       </form>
       { isUpdated ? <UpdateTable /> : <CsvTable /> }
     </div>
