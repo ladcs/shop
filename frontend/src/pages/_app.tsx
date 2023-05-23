@@ -56,7 +56,7 @@ function MarketProvider({ children }: Props) {
   const [validate, setValidate] = useState<string[]>([]);
   const [toNewPrices, setToNewPrices] = useState<NewPrices[] |[]>([]);
   const [changes, setChanges] = useState<Changes[] | []>([]);
-  const [isValid, setIsValid] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
   const [packsInfo, setPacksInfo] = useState<IPacks[] | []>([]);
 
   const value = {

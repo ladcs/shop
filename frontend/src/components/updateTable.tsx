@@ -24,12 +24,16 @@ const UpdateTable = () => {
               <TableCell>{ typeof item.currentPrice === "string" ?  parseFloat(item.currentPrice).toFixed(2): item.currentPrice.toFixed(2) }</TableCell>
               {/*@ts-ignore*/}
               <TableCell>{typeof item.newPrice === "string" ?  parseFloat(item.newPrice).toFixed(2) : item.newPrice.toFixed(2)}</TableCell>
-              <TableCell
-              className={ toNewPrices.filter(({ code }) => item.code == code)[0]
-              .status === 'okay' ? "text-green-600" : "text-red-600" }
-              >
+              {
+              toNewPrices.filter(({ code }) => item
+                .code == code)[0] !== undefined ?
+                <TableCell
+                className={ toNewPrices.filter(({ code }) => item.code == code)[0] 
+                .status === 'okay' ? "text-green-600" : "text-red-600" } 
+              > 
                 {toNewPrices.filter(({ code }) => item.code == code)[0].status }
-              </TableCell>
+              </TableCell> : <></>
+              }
             </TableRow>
           ))
         }
